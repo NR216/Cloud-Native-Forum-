@@ -1,0 +1,49 @@
+body {
+    background-color: #f5f7fa;
+    min-height: 100vh;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+}
+
+.post-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.post-card .card-title a {
+    color: #2c3e50;
+}
+
+.post-card .card-title a:hover {
+    color: #0d6efd;
+}
+
+.post-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.reply-item:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.badge {
+    font-weight: 500;
+}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Forum - Home{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-collection"></i> All Posts</h2>
+    {% if current_user %}
+        <a href="{{ url_for('posts.create_post') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> New Post
+        </a>
+    {% endif %}
+</div>
+
+<div id="posts-container">
+{% if posts %}
+    {% for post in posts %}
+    <div class="card mb-3 post-card shadow-sm" id="post-card-{{ post.id }}">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                    <h5 class="card-title mb-1">
+                        <a href="{{ url_for('posts.view_post', post_id=post.id) }}" class="text-decoration-none">
+                            {{ post.title }}
+                        </a>
+                    </h5>
+                    <p class="text-muted small mb-2">
+                        {% if post.is_anonymous %}
+                            <i class="bi bi-incognito"></i> Anonymous
+                        {% else %}
+                            <i class="bi bi-person"></i> {{ post.author_name }}
+                        {% endif %}
+                        <span class="mx-1">|</span>
+                        <i class="bi bi-clock"></i> {{ post.created_at }}
+                        {% if post.image_url %}
+                            <span class="mx-1">|</span>
+                            <i class="bi bi-image text-success"></i>
+                        {% endif %}
+                    </p>
+                    {% if post.image_url %}
+                    <div class="mb-2">
+                        <img src="{{ post.image_url }}" alt="Post image" class="rounded" style="max-height: 150px; max-width: 100%;">
+                    </div>
+                    {% endif %}
+                    <p class="card-text text-truncate" style="max-width: 600px;">{{ post.content }}</p>
+                </div>
+                <div class="text-end ms-3">
+                    <span class="badge bg-danger rounded-pill me-1" id="like-badge-{{ post.id }}">
+                        <i class="bi bi-heart-fill"></i> {{ post.like_count }}
+                    </span>
+                    <span class="badge bg-info rounded-pill" id="reply-badge-{{ post.id }}">
+                        <i class="bi bi-chat-dots"></i> {{ post.reply_count }}
+                    </span>
+                </div>
+            </div>
+            {% if current_user and current_user.role == 'admin' %}
+            <div class="mt-2">
+                <button type="button" class="btn btn-outline-danger btn-sm"
+                        onclick="deletePost({{ post.id }})">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="text-center py-5" id="empty-placeholder">
+        <i class="bi bi-inbox display-1 text-muted"></i>
+        <p class="text-muted mt-3">No posts yet. Be the first to create one!</p>
+    </div>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const isAdmin = {{ 'true' if current_user and current_user.role == 'admin' else 'false' }};
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// --- New post arrives ---
+socket.on('new_post', function(data) {
+    const container = document.getElementById('posts-container');
+    const empty = document.getElementById('empty-placeholder');
+    if (empty) empty.remove();
+
+    const adminBtn = isAdmin
+        ? `<div class="mt-2">
+               <button type="button" class="btn btn-outline-danger btn-sm"
+                       onclick="deletePost(${data.id})">
+                   <i class="bi bi-trash"></i> Delete
+               </button>
+           </div>`
+        : '';
+
+    const card = document.createElement('div');
+    card.className = 'card mb-3 post-card shadow-sm';
+    card.id = 'post-card-' + data.id;
+    card.innerHTML = `
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                    <h5 class="card-title mb-1">
+                        <a href="/post/${data.id}" class="text-decoration-none">
+                            ${escapeHtml(data.title)}
+                        </a>
+                    </h5>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-person"></i> ${escapeHtml(data.author_name)}
+                        <span class="mx-1">|</span>
+                        <i class="bi bi-clock"></i> ${escapeHtml(data.created_at)}
+                    </p>
+                    <p class="card-text text-truncate" style="max-width: 600px;">${escapeHtml(data.content)}</p>
+                </div>
+                <div class="text-end ms-3">
+                    <span class="badge bg-danger rounded-pill me-1" id="like-badge-${data.id}">
+                        <i class="bi bi-heart-fill"></i> ${data.like_count}
+                    </span>
+                    <span class="badge bg-info rounded-pill" id="reply-badge-${data.id}">
+                        <i class="bi bi-chat-dots"></i> ${data.reply_count}
+                    </span>
+                </div>
+            </div>
+            ${adminBtn}
+        </div>`;
+    container.insertBefore(card, container.firstChild);
+});
+
+// --- Post deleted ---
+socket.on('delete_post', function(data) {
+    const card = document.getElementById('post-card-' + data.post_id);
+    if (card) card.remove();
+});
+
+// --- Like updated ---
+socket.on('like_update', function(data) {
+    const badge = document.getElementById('like-badge-' + data.post_id);
+    if (badge) {
+        badge.innerHTML = '<i class="bi bi-heart-fill"></i> ' + data.like_count;
+    }
+});
+
+// --- New reply (update reply count badge) ---
+socket.on('new_reply', function(data) {
+    const badge = document.getElementById('reply-badge-' + data.post_id);
+    if (badge) {
+        badge.innerHTML = '<i class="bi bi-chat-dots"></i> ' + data.reply_count;
+    }
+});
+
+// --- Reply deleted (update reply count badge) ---
+socket.on('delete_reply', function(data) {
+    const badge = document.getElementById('reply-badge-' + data.post_id);
+    if (badge) {
+        badge.innerHTML = '<i class="bi bi-chat-dots"></i> ' + data.reply_count;
+    }
+});
+
+// --- AJAX delete post (admin) ---
+function deletePost(postId) {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    fetch('/post/' + postId + '/delete', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    }).then(r => r.json()).then(data => {
+        if (!data.success) alert(data.error || 'Failed to delete post.');
+    });
+}
+</script>
+{% endblock %}

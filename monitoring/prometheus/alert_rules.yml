@@ -1,0 +1,72 @@
+groups:
+  - name: forum_alerts
+    rules:
+      # High error rate (5xx responses)
+      - alert: HighErrorRate
+        expr: rate(flask_request_total{status=~"5.."}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High HTTP error rate detected"
+          description: "More than 10% of requests are returning 5xx errors."
+
+      # High request latency
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, rate(flask_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High request latency detected"
+          description: "95th percentile latency is above 2 seconds."
+
+      # Database down
+      - alert: DatabaseDown
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "The PostgreSQL database is not responding."
+
+      # High CPU usage
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is above 80% for more than 5 minutes."
+
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is above 85%."
+
+      # Low disk space
+      - alert: LowDiskSpace
+        expr: (1 - node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 > 90
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Low disk space"
+          description: "Disk usage is above 90%."
+
+      # Forum-specific: no posts in 24h (optional, for demo)
+      - alert: NoNewPosts
+        expr: increase(forum_posts_total[24h]) == 0
+        for: 24h
+        labels:
+          severity: info
+        annotations:
+          summary: "No new posts in 24 hours"
+          description: "The forum has not received any new posts in the last 24 hours."
