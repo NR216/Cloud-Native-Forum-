@@ -24,6 +24,7 @@ class Config:
     SECRET_KEY = _read_secret('secret_key', 'dev-secret-key-change-me')
     DATABASE_URL = _build_database_url()
     REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+    RATELIMIT_STORAGE_URI = REDIS_URL
 
     # Flask-Session with Redis
     SESSION_TYPE = 'redis'
@@ -32,7 +33,10 @@ class Config:
 
     # Admin defaults
     ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
-    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
+    ADMIN_PASSWORD = _read_secret(
+        'admin_password',
+        os.environ.get('ADMIN_PASSWORD', 'change-me')
+    )
 
     # Backup
     BACKUP_DIR = os.environ.get('BACKUP_DIR', '/backups')

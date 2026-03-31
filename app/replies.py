@@ -14,6 +14,7 @@ replies_bp = Blueprint('replies', __name__)
 @login_required
 def add_reply(post_id):
     content = request.form['content'].strip()
+    is_anonymous = request.form.get('is_anonymous') == 'on'
     if not content:
         if _is_ajax():
             return jsonify({'error': 'Reply cannot be empty.'}), 400
@@ -23,14 +24,19 @@ def add_reply(post_id):
     db = get_db()
     cur = get_cursor()
     cur.execute(
-        'INSERT INTO replies (content, post_id, author_id) VALUES (%s, %s, %s) RETURNING id',
-        (content, post_id, session['user_id'])
+        '''
+        INSERT INTO replies (content, is_anonymous, post_id, author_id)
+        VALUES (%s, %s, %s, %s)
+        RETURNING id
+        ''',
+        (content, is_anonymous, post_id, session['user_id'])
     )
     reply_id = cur.fetchone()['id']
     db.commit()
 
     cur.execute(
-        '''SELECT r.*, u.username AS author_name
+        '''SELECT r.*,
+                  CASE WHEN r.is_anonymous THEN 'Anonymous' ELSE u.username END AS author_name
            FROM replies r JOIN users u ON r.author_id = u.id
            WHERE r.id = %s''',
         (reply_id,)
@@ -46,6 +52,7 @@ def add_reply(post_id):
         'id': reply['id'],
         'content': reply['content'],
         'author_name': reply['author_name'],
+        'is_anonymous': reply['is_anonymous'],
         'created_at': str(reply['created_at']),
         'post_id': post_id,
         'reply_count': reply_count,

@@ -32,6 +32,22 @@ else
     echo "Created secret: db_password"
 fi
 
+# Create admin_password (default admin account password)
+if docker secret inspect admin_password >/dev/null 2>&1; then
+    echo "Secret 'admin_password' already exists, skipping."
+else
+    openssl rand -hex 16 | docker secret create admin_password -
+    echo "Created secret: admin_password"
+fi
+
+# Create grafana_admin_password (Grafana admin password)
+if docker secret inspect grafana_admin_password >/dev/null 2>&1; then
+    echo "Secret 'grafana_admin_password' already exists, skipping."
+else
+    openssl rand -hex 16 | docker secret create grafana_admin_password -
+    echo "Created secret: grafana_admin_password"
+fi
+
 echo ""
 echo "=== Building Docker Image ==="
 docker build -t forum-app:latest .

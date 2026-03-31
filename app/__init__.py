@@ -19,8 +19,8 @@ def create_app():
     sess.init_app(app)
 
     # Initialize rate limiter with Redis storage
-    limiter.init_app(app)
     app.config['RATELIMIT_STORAGE_URI'] = app.config['REDIS_URL']
+    limiter.init_app(app)
 
     # Initialize SocketIO with Redis message queue (for multi-replica broadcast)
     socketio.init_app(

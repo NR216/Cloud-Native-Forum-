@@ -134,7 +134,8 @@ def view_post(post_id):
         abort(404)
 
     cur.execute('''
-        SELECT r.*, u.username AS author_name
+        SELECT r.*,
+               CASE WHEN r.is_anonymous THEN 'Anonymous' ELSE u.username END AS author_name
         FROM replies r
         JOIN users u ON r.author_id = u.id
         WHERE r.post_id = %s

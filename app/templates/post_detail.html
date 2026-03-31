@@ -71,7 +71,13 @@
             <div class="reply-item border-bottom pb-3 mb-3" id="reply-{{ reply.id }}">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <strong>{{ reply.author_name }}</strong>
+                        <strong>
+                            {% if reply.is_anonymous %}
+                                <i class="bi bi-incognito"></i> Anonymous
+                            {% else %}
+                                {{ reply.author_name }}
+                            {% endif %}
+                        </strong>
                         <small class="text-muted ms-2">{{ reply.created_at }}</small>
                     </div>
                     {% if current_user and current_user.role == 'admin' %}
@@ -123,6 +129,12 @@
             <div class="mb-3">
                 <textarea class="form-control" name="content" id="reply-content" rows="3" required
                           placeholder="Write your reply..."></textarea>
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="reply-is-anonymous" name="is_anonymous">
+                <label class="form-check-label" for="reply-is-anonymous">
+                    <i class="bi bi-incognito"></i> Reply anonymously
+                </label>
             </div>
             <button type="submit" class="btn btn-primary btn-sm">
                 <i class="bi bi-send"></i> Submit Reply
@@ -181,6 +193,9 @@ function submitReply(e) {
 
     const formData = new FormData();
     formData.append('content', content);
+    if (document.getElementById('reply-is-anonymous').checked) {
+        formData.append('is_anonymous', 'on');
+    }
 
     fetch('/post/' + POST_ID + '/reply', {
         method: 'POST',
@@ -189,6 +204,7 @@ function submitReply(e) {
     }).then(r => r.json()).then(data => {
         if (data.success) {
             document.getElementById('reply-content').value = '';
+            document.getElementById('reply-is-anonymous').checked = false;
         } else if (data.error) {
             alert(data.error);
         }
@@ -268,7 +284,7 @@ socket.on('new_reply', function(data) {
     div.innerHTML = `
         <div class="d-flex justify-content-between align-items-start">
             <div>
-                <strong>${escapeHtml(data.author_name)}</strong>
+                <strong>${data.is_anonymous ? '<i class="bi bi-incognito"></i> Anonymous' : escapeHtml(data.author_name)}</strong>
                 <small class="text-muted ms-2">${escapeHtml(data.created_at)}</small>
             </div>
             ${adminBtn}

@@ -1,16 +1,14 @@
-version: '3.8'
-
 services:
   app:
     build: .
     ports:
-      - "5000:5000"
+      - "${APP_PORT:-5001}:5000"
     environment:
-      - DATABASE_URL=postgresql://forum:forum@postgres:5432/forum
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-forum}:${POSTGRES_PASSWORD:-forum}@postgres:5432/${POSTGRES_DB:-forum}
       - REDIS_URL=redis://redis:6379/0
-      - SECRET_KEY=dev-secret-key-change-in-production
-      - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=admin123
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-change-me}
     depends_on:
       postgres:
         condition: service_healthy
@@ -25,9 +23,9 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: forum
-      POSTGRES_USER: forum
-      POSTGRES_PASSWORD: forum
+      POSTGRES_DB: ${POSTGRES_DB:-forum}
+      POSTGRES_USER: ${POSTGRES_USER:-forum}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-forum}
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -81,7 +79,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-change-me}
       - GF_USERS_ALLOW_SIGN_UP=false
     depends_on:
       - prometheus
@@ -100,7 +98,7 @@ services:
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter:latest
     environment:
-      DATA_SOURCE_NAME: "postgresql://forum:forum@postgres:5432/forum?sslmode=disable"
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER:-forum}:${POSTGRES_PASSWORD:-forum}@postgres:5432/${POSTGRES_DB:-forum}?sslmode=disable"
     ports:
       - "9187:9187"
     depends_on:
