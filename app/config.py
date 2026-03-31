@@ -21,9 +21,11 @@ def _build_database_url():
 
 
 class Config:
+    TESTING = os.environ.get('TESTING', '').lower() in ('1', 'true', 'yes', 'on')
     SECRET_KEY = _read_secret('secret_key', 'dev-secret-key-change-me')
     DATABASE_URL = _build_database_url()
     REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+    RATELIMIT_ENABLED = os.environ.get('RATELIMIT_ENABLED', 'true').lower() in ('1', 'true', 'yes', 'on')
     RATELIMIT_STORAGE_URI = REDIS_URL
 
     # Flask-Session with Redis

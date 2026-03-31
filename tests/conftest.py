@@ -4,6 +4,8 @@ import pytest
 os.environ.setdefault('SECRET_KEY', 'test-secret-key')
 os.environ.setdefault('DATABASE_URL', 'postgresql://forum:forum@localhost:5432/forum_test')
 os.environ.setdefault('REDIS_URL', 'redis://localhost:6379/0')
+os.environ.setdefault('TESTING', '1')
+os.environ.setdefault('RATELIMIT_ENABLED', 'false')
 
 
 @pytest.fixture(scope='session')
