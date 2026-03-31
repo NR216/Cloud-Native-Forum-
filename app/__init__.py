@@ -22,13 +22,14 @@ def create_app():
     app.config['RATELIMIT_STORAGE_URI'] = app.config['REDIS_URL']
     limiter.init_app(app)
 
-    # Initialize SocketIO with Redis message queue (for multi-replica broadcast)
-    socketio.init_app(
-        app,
-        message_queue=app.config['REDIS_URL'],
-        async_mode='eventlet',
-        cors_allowed_origins='*'
-    )
+    # Use a simpler Socket.IO backend in tests to avoid CI-only async/runtime issues.
+    socketio_options = {
+        'async_mode': 'threading' if app.config.get('TESTING') else 'eventlet',
+        'cors_allowed_origins': '*',
+    }
+    if not app.config.get('TESTING'):
+        socketio_options['message_queue'] = app.config['REDIS_URL']
+    socketio.init_app(app, **socketio_options)
 
     # Initialize database pool
     from app.database import init_pool, init_db, close_db
