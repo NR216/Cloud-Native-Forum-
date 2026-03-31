@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#f2efe8"/>
+  <rect x="74" y="72" width="1052" height="576" rx="24" fill="#1f2430"/>
+  <rect x="104" y="102" width="992" height="516" rx="16" fill="#252d3b"/>
+  <g fill="#e8edf5" font-family="Courier New, monospace">
+    <text x="152" y="168" font-size="34" font-weight="700">Explaining complexity without panicking</text>
+    <text x="164" y="238" font-size="28">for level in tree:</text>
+    <text x="204" y="280" font-size="28">work_per_level = n</text>
+    <text x="204" y="322" font-size="28">levels = log n</text>
+    <text x="164" y="382" font-size="30">Total = O(n log n)</text>
+    <text x="164" y="442" font-size="24">Say what happens once, then scale it.</text>
+    <text x="164" y="482" font-size="24">Do not start with the scary notation.</text>
+  </g>
+  <g fill="none" stroke="#68b0ab" stroke-width="4" stroke-linecap="round">
+    <path d="M778 194h214"/>
+    <path d="M816 194v98"/>
+    <path d="M954 194v98"/>
+    <path d="M760 324h252"/>
+    <path d="M842 324v92"/>
+    <path d="M928 324v92"/>
+  </g>
+  <g fill="#ffd166" font-family="Arial, Helvetica, sans-serif">
+    <text x="780" y="170" font-size="24">merge sort sketch</text>
+    <text x="786" y="470" font-size="22">example input size: 16</text>
+  </g>
+</svg>

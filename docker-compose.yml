@@ -9,6 +9,7 @@ services:
       - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-change-me}
+      - LOAD_DEMO_SEED=${LOAD_DEMO_SEED:-true}
     depends_on:
       postgres:
         condition: service_healthy

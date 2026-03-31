@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#f4efe7"/>
+  <rect x="74" y="68" width="1052" height="584" rx="22" fill="#24453a"/>
+  <rect x="96" y="90" width="1008" height="540" rx="16" fill="#2b5748"/>
+  <g fill="none" stroke="#e8f2df" stroke-width="4" stroke-linecap="round">
+    <path d="M170 190c72-52 158-82 246-88 130-8 238 26 318 104 58 56 96 126 118 208"/>
+    <path d="M198 484c78-54 158-84 240-90 114-8 208 18 276 76 32 28 60 62 82 102"/>
+    <path d="M292 152v174"/>
+    <path d="M292 152h-92"/>
+    <path d="M292 326h118"/>
+    <path d="M704 214h178"/>
+    <path d="M704 214l54-54"/>
+    <path d="M704 214l62 76"/>
+  </g>
+  <g fill="#f1f7e8" font-family="Arial, Helvetica, sans-serif">
+    <text x="156" y="146" font-size="34" font-weight="700">Quantum notes after office hours</text>
+    <text x="182" y="240" font-size="28">psi(x,t) = A e</text>
+    <text x="380" y="224" font-size="18">i(kx - wt)</text>
+    <text x="184" y="286" font-size="24">measurement problem?</text>
+    <text x="182" y="518" font-size="26">"helpful until page 3"</text>
+    <text x="700" y="164" font-size="22">wave packet</text>
+    <text x="822" y="310" font-size="24">collapse?</text>
+  </g>
+  <g fill="#ffcc66">
+    <circle cx="884" cy="152" r="10"/>
+    <circle cx="920" cy="168" r="8"/>
+    <circle cx="954" cy="184" r="6"/>
+  </g>
+</svg>

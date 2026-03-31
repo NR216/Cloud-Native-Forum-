@@ -39,7 +39,7 @@ def close_db(exc=None):
 
 
 def init_db(app):
-    """Run the schema migration and create default admin account."""
+    """Run schema setup, create the default admin, and load demo seed data."""
     import os
     from werkzeug.security import generate_password_hash
 
@@ -54,6 +54,15 @@ def init_db(app):
         )
         with open(sql_path, 'r') as f:
             cur.execute(f.read())
+
+        if app.config.get('LOAD_DEMO_SEED'):
+            seed_path = os.path.join(
+                os.path.dirname(os.path.dirname(__file__)),
+                'migrations', 'seed_demo.sql'
+            )
+            if os.path.exists(seed_path):
+                with open(seed_path, 'r') as f:
+                    cur.execute(f.read())
 
         # Create default admin if not exists
         cur.execute('SELECT id FROM users WHERE username = %s',

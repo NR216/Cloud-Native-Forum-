@@ -22,6 +22,7 @@ def _build_database_url():
 
 class Config:
     TESTING = os.environ.get('TESTING', '').lower() in ('1', 'true', 'yes', 'on')
+    LOAD_DEMO_SEED = os.environ.get('LOAD_DEMO_SEED', 'true').lower() in ('1', 'true', 'yes', 'on')
     SECRET_KEY = _read_secret('secret_key', 'dev-secret-key-change-me')
     DATABASE_URL = _build_database_url()
     REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')

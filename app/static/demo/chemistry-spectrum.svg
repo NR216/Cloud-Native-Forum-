@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#f6f3ec"/>
+  <rect x="88" y="78" width="1024" height="564" rx="18" fill="#ffffff" stroke="#d7d0c5" stroke-width="4"/>
+  <g stroke="#2c3f58" stroke-width="4" fill="none">
+    <path d="M138 566H1060"/>
+    <path d="M138 154V566"/>
+    <path d="M198 566V528"/>
+    <path d="M318 566V544"/>
+    <path d="M438 566V532"/>
+    <path d="M558 566V538"/>
+    <path d="M678 566V540"/>
+    <path d="M798 566V526"/>
+    <path d="M918 566V534"/>
+  </g>
+  <g stroke="#355c7d" stroke-width="5" fill="none" stroke-linecap="round">
+    <path d="M166 558
+             L198 556
+             L228 554
+             L258 548
+             L286 544
+             L314 552
+             L340 553
+             L366 548
+             L390 380
+             L404 550
+             L432 552
+             L466 548
+             L492 544
+             L522 556
+             L550 550
+             L580 268
+             L592 550
+             L612 554
+             L654 548
+             L692 492
+             L706 548
+             L744 552
+             L784 548
+             L824 210
+             L836 548
+             L882 552
+             L928 532
+             L972 548
+             L1032 554"/>
+  </g>
+  <g fill="#2a3240" font-family="Arial, Helvetica, sans-serif">
+    <text x="144" y="132" font-size="34" font-weight="700">NMR spectrum draft</text>
+    <text x="144" y="174" font-size="24">small shoulder peak or sleep deprivation?</text>
+    <text x="876" y="196" font-size="20">main signal</text>
+    <text x="560" y="254" font-size="20">tiny shoulder</text>
+    <text x="140" y="620" font-size="18">ppm</text>
+  </g>
+</svg>
