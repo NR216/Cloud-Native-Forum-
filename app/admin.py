@@ -2,7 +2,7 @@ from flask import (
     Blueprint, render_template, request, redirect,
     url_for, flash, session, jsonify
 )
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 from app.database import get_db, get_cursor
 from app.auth import admin_required, _is_ajax

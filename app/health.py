@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-from app.database import get_db, get_cursor
+from app.database import get_cursor
 
 health_bp = Blueprint('health', __name__)
 

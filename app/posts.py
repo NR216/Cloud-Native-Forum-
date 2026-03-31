@@ -3,9 +3,8 @@ import uuid
 
 from flask import (
     Blueprint, render_template, request, redirect,
-    url_for, flash, session, jsonify, abort, current_app, send_from_directory
+    url_for, flash, session, jsonify, abort, send_from_directory
 )
-from werkzeug.utils import secure_filename
 
 from app.database import get_db, get_cursor
 from app.auth import login_required, admin_required, _is_ajax
