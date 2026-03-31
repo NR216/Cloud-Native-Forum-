@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}System Status - Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-activity"></i> System Status</h2>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-dark btn-sm">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+<div class="row g-3 mb-4">
+    <!-- PostgreSQL -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-database"></i> PostgreSQL</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm mb-0">
+                    <tr>
+                        <td class="fw-bold">Status</td>
+                        <td><span class="badge bg-success">Healthy</span></td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Database Size</td>
+                        <td>{{ db_size_mb }} MB</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Active Connections</td>
+                        <td>{{ db_connections }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Redis -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-lightning"></i> Redis</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm mb-0">
+                    <tr>
+                        <td class="fw-bold">Status</td>
+                        <td>
+                            {% if redis_status == 'healthy' %}
+                                <span class="badge bg-success">Healthy</span>
+                            {% else %}
+                                <span class="badge bg-danger">Unhealthy</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Memory Used</td>
+                        <td>{{ redis_memory }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Connected Clients</td>
+                        <td>{{ redis_clients }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Monitoring Links -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0"><i class="bi bi-graph-up"></i> Monitoring Tools</h5>
+    </div>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card border h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-bar-chart-line display-4 text-warning"></i>
+                        <h6 class="mt-2">Prometheus</h6>
+                        <p class="text-muted small">Metrics collection & alerting</p>
+                        <a href="/metrics" target="_blank" class="btn btn-outline-warning btn-sm">
+                            <i class="bi bi-box-arrow-up-right"></i> App Metrics
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-speedometer display-4 text-success"></i>
+                        <h6 class="mt-2">Grafana</h6>
+                        <p class="text-muted small">Dashboards & visualization</p>
+                        <a href="http://{{ request.host.split(':')[0] }}:3000" target="_blank"
+                           class="btn btn-outline-success btn-sm">
+                            <i class="bi bi-box-arrow-up-right"></i> Open Grafana
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-heart-pulse display-4 text-info"></i>
+                        <h6 class="mt-2">Health Check</h6>
+                        <p class="text-muted small">App health endpoint</p>
+                        <a href="/health" target="_blank" class="btn btn-outline-info btn-sm">
+                            <i class="bi bi-box-arrow-up-right"></i> Check Health
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Reports - Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-flag"></i> Reported Posts</h2>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-dark btn-sm">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Post</th>
+                    <th>Author</th>
+                    <th>Reported By</th>
+                    <th>Reason</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in reports %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('posts.view_post', post_id=r.post_id) }}" class="text-decoration-none">
+                            {{ r.post_title[:40] }}{% if r.post_title|length > 40 %}...{% endif %}
+                        </a>
+                    </td>
+                    <td>{{ r.post_author }}</td>
+                    <td>{{ r.reporter_name }}</td>
+                    <td><small>{{ r.reason }}</small></td>
+                    <td><small class="text-muted">{{ r.created_at }}</small></td>
+                    <td>
+                        <button class="btn btn-outline-danger btn-sm py-0"
+                                onclick="deletePost({{ r.post_id }})">
+                            <i class="bi bi-trash"></i> Delete Post
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm py-0"
+                                onclick="dismissReport({{ r.id }})">
+                            <i class="bi bi-x"></i> Dismiss
+                        </button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="6" class="text-center text-muted py-3">No reports.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function deletePost(postId) {
+    if (!confirm('Delete this reported post?')) return;
+    fetch('/post/' + postId + '/delete', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    }).then(r => r.json()).then(data => {
+        if (data.success) location.reload();
+    });
+}
+function dismissReport(reportId) {
+    fetch('/admin/reports/' + reportId + '/dismiss', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    }).then(r => r.json()).then(data => {
+        if (data.success) location.reload();
+    });
+}
+</script>
+{% endblock %}

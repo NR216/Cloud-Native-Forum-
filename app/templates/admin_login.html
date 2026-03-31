@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Admin Login - Forum{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow border-0">
+            <div class="card-header bg-dark text-white text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-shield-lock"></i> Admin Portal</h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted text-center mb-4">Restricted access. Admin credentials required.</p>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Admin Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person-fill-gear"></i></span>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   required autofocus placeholder="Enter admin username">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   required placeholder="Enter password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In as Admin
+                    </button>
+                </form>
+                <hr>
+                <p class="text-center text-muted small mb-0">
+                    <a href="{{ url_for('posts.index') }}" class="text-decoration-none">
+                        <i class="bi bi-arrow-left"></i> Back to Forum
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
