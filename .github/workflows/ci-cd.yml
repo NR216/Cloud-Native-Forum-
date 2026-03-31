@@ -74,8 +74,6 @@ jobs:
           DATABASE_URL: postgresql://forum:forum@localhost:5432/forum_test
           REDIS_URL: redis://localhost:6379/0
           SECRET_KEY: test-secret-key
-          TESTING: '1'
-          RATELIMIT_ENABLED: 'false'
         run: pytest tests/ -v
 
   build-and-push:
