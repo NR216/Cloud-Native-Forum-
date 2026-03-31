@@ -1,5 +1,21 @@
 # Cloud-Native Forum
 
+## Pending Items Before Final Submission
+
+### Must Complete
+
+- [ ] Add missing email information for team members whose email is still unavailable.
+- [ ] Add the final `ai-session.md` file required by the deliverable.
+- [ ] Add the final video demo link in the `## Video Demo` section.
+- [ ] Replace the screenshot placeholders with actual visible screenshots in the README.
+
+### Final Verification
+
+- [ ] Confirm the live deployment URL remains accessible during grading.
+- [ ] Proofread the README one final time for wording, consistency, and formatting.
+- [ ] Confirm the instructor and TAs are added as collaborators if the GitHub repository remains private.
+- [ ] If sensitive credentials are required for grading, send them to TA Yiren Zhao and add the exact text `Credentials sent to TA` in the Development Guide.
+
 This is a stateful cloud-native anonymous discussion forum built with Flask, PostgreSQL, Redis, Docker, and Docker Swarm. It combines a student-oriented discussion product with deployment, persistence, monitoring, and operations work required for the course project.
 
 ## Team Information
@@ -217,7 +233,7 @@ pytest tests -v
 
 ## Deployment Information
 
-- Live deployment URL: TBD
+- Live deployment URL: `http://137.184.164.255:5000`
 - Target production environment: a DigitalOcean Droplet (Toronto region) using Docker Swarm.
 
 ### Docker Swarm Deployment
@@ -343,12 +359,3 @@ The project was completed collaboratively by all four team members. The list bel
 ## Video Demo
 
 - Video demo link: TBD
-
-## Pending Items Before Final Submission
-
-- Add missing email information for team members whose email is still unavailable.
-- Fill in the final live deployment URL for the DigitalOcean Droplet.
-- Add the final `ai-session.md` file.
-- Add the final video demo link.
-- Add final screenshots to the README.
-- Perform one final proofreading pass on wording and formatting.
