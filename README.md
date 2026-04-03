@@ -25,7 +25,7 @@ This is a stateful cloud-native anonymous discussion forum built with Flask, Pos
 | Yinghao Wang | 1012814750 | supperbon | TBD |
 | Nairui Tian | 1012435330 | NR216 | n.tian@mail.utoronto.ca |
 | Cunming Liu | 1012826248 | cunming666 | cunming.liu@mail.utoronto.ca |
-| Ciliang Zhang | 1011618304 | EdisonZHANG123 | TBD |
+| Ciliang Zhang | 1011618304 | EdisonZHANG123 | ciliang.zhang@mail.utoronto.ca |
 
 Repository: https://github.com/NR216/Cloud-Native-Forum-.git
 
