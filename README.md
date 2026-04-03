@@ -238,8 +238,6 @@ pytest tests -v
 - Public monitoring endpoints:
   - Prometheus: `http://137.184.164.255:9090`
   - Grafana: `http://137.184.164.255:3000`
-- Additional non-sensitive production deployment details are documented in `docs/production-deployment.md`.
-- Runtime secret handling is documented in `docs/secrets-and-runtime-config.md`.
 
 ### Docker Swarm Deployment
 
@@ -254,6 +252,34 @@ The production configuration in `docker-stack.yml` includes:
 - external Docker Swarm secrets for production-only credentials
 - demo seed content loaded from `migrations/seed_demo.sql` when `LOAD_DEMO_SEED=true`
 
+### Production Stack Summary
+
+The production deployment uses a single DigitalOcean Droplet running Docker Swarm
+in single-node mode. The stack includes:
+
+- `forum_app` with 3 replicas
+- `forum_postgres` for persistent relational data
+- `forum_redis` for sessions and Socket.IO backend
+- `forum_prometheus` for metrics collection
+- `forum_grafana` for dashboards
+- `forum_node-exporter` for host-level metrics
+- `forum_postgres-exporter` for PostgreSQL metrics
+- `forum_backup` for scheduled backups
+- `forum_auto-scaler` for metric-driven scaling logic
+
+### Persistent Data
+
+The production deployment uses named Docker volumes for:
+
+- `postgres-data`
+- `redis-data`
+- `prometheus-data`
+- `grafana-data`
+- `backup-data`
+- `uploads-data`
+
+These volumes preserve application state across container restarts and redeployments.
+
 ### Swarm Initialization
 
 ```bash
@@ -266,6 +292,17 @@ The production configuration in `docker-stack.yml` includes:
 ./scripts/deploy-stack.sh
 ```
 
+### Deployment Flow
+
+The intended production deployment flow is:
+
+1. SSH into the DigitalOcean Droplet.
+2. Initialize Docker Swarm with `./scripts/init-swarm.sh`.
+3. Build the application image as `forum-app:latest`.
+4. Ensure the required external Docker Swarm secrets exist before deployment.
+5. Deploy the stack with `./scripts/deploy-stack.sh`.
+6. Verify service health, public endpoints, and replica status.
+
 ### Backup and Restore
 
 Backup and restore scripts are provided in:
@@ -273,12 +310,33 @@ Backup and restore scripts are provided in:
 - `scripts/backup.sh`
 - `scripts/restore.sh`
 
+### Demo Data
+
+When `LOAD_DEMO_SEED=true`, the application initialization path loads demo forum
+content from `migrations/seed_demo.sql`. That seed file defines the demo users,
+posts, replies, and likes used during grading and demo walkthroughs.
+
+### Secret Handling
+
+Production-sensitive values are intentionally not stored in the GitHub repository.
+The production stack expects external Docker Swarm secrets for:
+
+- `secret_key`
+- `db_password`
+- `admin_password`
+- `grafana_admin_password`
+
+The application reads these values at runtime from `/run/secrets/...`, while
+development defaults remain in `.env.example` and `docker-compose.yml`.
+
 ### Deployment Notes
 
 - The project is intended to remain online during grading.
 - Production secrets should be created before Swarm deployment.
 - Monitoring services should be enabled during demo and evaluation.
 - Sensitive access credentials are intentionally kept out of the GitHub repository.
+- SSH access information, admin login information, and monitoring login details
+  should be retrieved from the separate credentials package sent to the TA.
 
 ## Source Code Contents
 
@@ -293,8 +351,6 @@ The repository includes the following required implementation artifacts:
 - backup, restore, deployment, and auto-scaling scripts
 - test suite for key routes
 - environment template in `.env.example`
-- non-sensitive production deployment notes in `docs/production-deployment.md`
-- runtime secret handling notes in `docs/secrets-and-runtime-config.md`
 
 ## AI Usage Summary
 
