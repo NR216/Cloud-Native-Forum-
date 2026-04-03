@@ -231,6 +231,8 @@ python wsgi.py
 pytest tests -v
 ```
 
+Credentials sent to TA
+
 ## Deployment Information
 
 - Live deployment URL: `http://137.184.164.255:5000`
