@@ -235,17 +235,24 @@ pytest tests -v
 
 - Live deployment URL: `http://137.184.164.255:5000`
 - Target production environment: a DigitalOcean Droplet (Toronto region) using Docker Swarm.
+- Public monitoring endpoints:
+  - Prometheus: `http://137.184.164.255:9090`
+  - Grafana: `http://137.184.164.255:3000`
+- Additional non-sensitive production deployment details are documented in `docs/production-deployment.md`.
+- Runtime secret handling is documented in `docs/secrets-and-runtime-config.md`.
 
 ### Docker Swarm Deployment
 
 The production configuration in `docker-stack.yml` includes:
 
-- replicated app service
-- persistent volumes
-- secrets for sensitive configuration
-- monitoring services
-- backup service
-- auto-scaler service
+- a replicated Flask app service with 3 replicas
+- PostgreSQL and Redis for stateful runtime data
+- Prometheus, Grafana, node-exporter, and postgres-exporter for observability
+- a scheduled backup service
+- an auto-scaler service
+- named volumes for persistent data
+- external Docker Swarm secrets for production-only credentials
+- demo seed content loaded from `migrations/seed_demo.sql` when `LOAD_DEMO_SEED=true`
 
 ### Swarm Initialization
 
@@ -271,6 +278,7 @@ Backup and restore scripts are provided in:
 - The project is intended to remain online during grading.
 - Production secrets should be created before Swarm deployment.
 - Monitoring services should be enabled during demo and evaluation.
+- Sensitive access credentials are intentionally kept out of the GitHub repository.
 
 ## Source Code Contents
 
@@ -285,6 +293,8 @@ The repository includes the following required implementation artifacts:
 - backup, restore, deployment, and auto-scaling scripts
 - test suite for key routes
 - environment template in `.env.example`
+- non-sensitive production deployment notes in `docs/production-deployment.md`
+- runtime secret handling notes in `docs/secrets-and-runtime-config.md`
 
 ## AI Usage Summary
 
