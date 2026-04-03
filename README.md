@@ -358,4 +358,4 @@ The project was completed collaboratively by all four team members. The list bel
 
 ## Video Demo
 
-- Video demo link: TBD
+- Video demo link: https://youtu.be/LiqNHpgbzjs
