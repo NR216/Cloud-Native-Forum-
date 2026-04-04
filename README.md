@@ -22,7 +22,7 @@ This is a stateful cloud-native anonymous discussion forum built with Flask, Pos
 
 | Name | Student Number | GitHub Username | Email |
 | --- | --- | --- | --- |
-| Yinghao Wang | 1012814750 | supperbon | TBD |
+| Yinghao Wang | 1012814750 | supperbon | ericw.wang@mail.utoronto.ca |
 | Nairui Tian | 1012435330 | NR216 | n.tian@mail.utoronto.ca |
 | Cunming Liu | 1012826248 | cunming666 | cunming.liu@mail.utoronto.ca |
 | Ciliang Zhang | 1011618304 | EdisonZHANG123 | ciliang.zhang@mail.utoronto.ca |
