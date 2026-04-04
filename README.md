@@ -178,29 +178,26 @@ At the application level, the Flask app is organized into Blueprints for authent
    ![Register page](asset/register.png)
 2. Log in as a normal user.
    ![User login page](asset/login.png)
-3. Create a post with or without an image.
+3. Create a post with or without an image and user can choose whether to publish it anonymously.
    ![Create post form](asset/new_post.png)
-4. Choose whether to publish the post anonymously.
-   ![Anonymous posting option](asset/new_post.png)
-5. Open a post to view replies and like content.
+4. Open a post to view replies and like content.
    ![Post detail page](asset/post_detail.png)
-6. Report inappropriate posts if needed.
-   ![Report post option](asset/post_detail.png)
+5. Report inappropriate posts if needed.
+   ![Report post option](asset/report_post.png)
 
 ### Admin Flow
 
-1. Open the dedicated admin portal.
+1. Open the dedicated admin portal and log in with an admin account.
    ![Admin portal login page](asset/admin_login.png)
-2. Log in with an admin account.
-   ![Admin sign-in page](asset/admin_login.png)
-3. Review platform statistics.
+2. Review platform statistics.
    ![Admin dashboard overview](asset/admin_dashboard.png)
-4. Manage users and roles.
+3. Manage users and roles.
    ![User management page](asset/admin_users.png)
-5. Moderate posts and reports.
+4. Moderate posts and reports.
    ![Post management page](asset/admin_posts.png)
    ![Reported posts page](asset/admin_reports.png)
-6. Inspect system status and monitoring links.
+5. Inspect system status and monitoring links.
+   ![System status page](asset/admin_system.png)
    ![Grafana dashboard](asset/grafana_dashboard.png)
    ![Prometheus alerts](asset/prometheus_alerts.png)
 
