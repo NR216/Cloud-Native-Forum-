@@ -50,12 +50,20 @@ We focused on the following objectives:
 
 ### Backend
 
+- Python 3.12
 - Flask 3.1
 - Flask-SocketIO
 - Flask-Session
 - Flask-Limiter
 - Gunicorn with Eventlet
 - Psycopg2
+
+### Frontend
+
+- HTML / CSS
+- JavaScript
+- Bootstrap 5
+- Socket.IO client
 
 ### Data and Messaging
 
@@ -167,20 +175,34 @@ At the application level, the Flask app is organized into Blueprints for authent
 ### Main User Flow
 
 1. Register a new account on the forum.
+   ![Register page](asset/register.png)
 2. Log in as a normal user.
+   ![User login page](asset/login.png)
 3. Create a post with or without an image.
+   ![Create post form](asset/new_post.png)
 4. Choose whether to publish the post anonymously.
-5. View other posts, reply, and like content.
+   ![Anonymous posting option](asset/new_post.png)
+5. Open a post to view replies and like content.
+   ![Post detail page](asset/post_detail.png)
 6. Report inappropriate posts if needed.
+   ![Report post option](asset/post_detail.png)
 
 ### Admin Flow
 
 1. Open the dedicated admin portal.
+   ![Admin portal login page](asset/admin_login.png)
 2. Log in with an admin account.
+   ![Admin sign-in page](asset/admin_login.png)
 3. Review platform statistics.
+   ![Admin dashboard overview](asset/admin_dashboard.png)
 4. Manage users and roles.
+   ![User management page](asset/admin_users.png)
 5. Moderate posts and reports.
+   ![Post management page](asset/admin_posts.png)
+   ![Reported posts page](asset/admin_reports.png)
 6. Inspect system status and monitoring links.
+   ![Grafana dashboard](asset/grafana_dashboard.png)
+   ![Prometheus alerts](asset/prometheus_alerts.png)
 
 ### Example Local URLs
 
@@ -369,7 +391,7 @@ One concrete example was deployment debugging: AI suggested configuration ideas 
 
 All final code, configuration, and documentation decisions were reviewed and adjusted by the team before being kept in the project.
 
-Detailed interaction records will be added in `ai-session.md`.
+Detailed interaction records are provided in `ai-session.md`.
 
 ## Individual Contributions
 
@@ -403,9 +425,8 @@ The project was completed collaboratively by all four team members. The list bel
 
 - Took primary responsibility for the Swarm deployment core in `docker-stack.yml`.
 - Worked on CI/CD and automated testing support.
-- Contributed backup-related operational scripts and deployment support.
+- Contributed admin module features and deployment support.
 - Helped validate the project through testing and deployment-oriented configuration.
-- Will compile and submit the final AI interaction record.
 
 ## Lessons Learned
 
@@ -415,14 +436,6 @@ The project was completed collaboratively by all four team members. The list bel
 4. Monitoring dashboards were useful not only for performance visibility, but also for debugging integration problems during development.
 5. Persistent storage design must be considered early, especially when uploads and multi-replica behavior are involved.
 6. Documentation can lag behind implementation very quickly, so it must be treated as part of the project instead of an afterthought.
-
-## Screenshots
-
-- Screenshot 1: TBD
-- Screenshot 2: TBD
-- Screenshot 3: TBD
-- Screenshot 4: TBD
-- Screenshot 5: TBD
 
 ## Video Demo
 
