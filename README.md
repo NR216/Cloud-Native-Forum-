@@ -1,23 +1,8 @@
 # Cloud-Native Forum
 
-## Pending Items Before Final Submission
-
-### Must Complete
-
-- [ ] Add missing email information for team members whose email is still unavailable.
-- [ ] Add the final `ai-session.md` file required by the deliverable.
-- [ ] Add the final video demo link in the `## Video Demo` section.
-- [ ] Replace the screenshot placeholders with actual visible screenshots in the README.
-
-### Final Verification
-
-- [ ] Confirm the live deployment URL remains accessible during grading.
-- [ ] Proofread the README one final time for wording, consistency, and formatting.
-- [ ] Confirm the instructor and TAs are added as collaborators if the GitHub repository remains private.
-- [ ] If sensitive credentials are required for grading, send them to TA Yiren Zhao and add the exact text `Credentials sent to TA` in the Development Guide.
-
 This is a stateful cloud-native anonymous discussion forum built with Flask, PostgreSQL, Redis, Docker, and Docker Swarm. It combines a student-oriented discussion product with deployment, persistence, monitoring, and operations work required for the course project.
 
+**Video Demo:** https://youtu.be/LiqNHpgbzjs
 ## Team Information
 
 | Name | Student Number | GitHub Username | Email |
@@ -433,7 +418,3 @@ The project was completed collaboratively by all four team members. The list bel
 4. Monitoring dashboards were useful not only for performance visibility, but also for debugging integration problems during development.
 5. Persistent storage design must be considered early, especially when uploads and multi-replica behavior are involved.
 6. Documentation can lag behind implementation very quickly, so it must be treated as part of the project instead of an afterthought.
-
-## Video Demo
-
-- Video demo link: https://youtu.be/LiqNHpgbzjs
