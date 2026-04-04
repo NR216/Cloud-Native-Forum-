@@ -410,6 +410,8 @@ The project was completed collaboratively by all four team members. The list bel
 - Contributed admin module features and deployment support.
 - Helped validate the project through testing and deployment-oriented configuration.
 
+Note: Some code was initially created and integrated locally before being pushed as a complete feature commit. Therefore, the commit history for some parts is relatively concentrated.
+
 ## Lessons Learned
 
 1. Building a cloud-native application is not only about writing features; deployment, persistence, monitoring, and operations take significant engineering effort.
